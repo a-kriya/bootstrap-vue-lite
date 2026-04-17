@@ -1,0 +1,70 @@
+{
+  "name": "bootstrap-vue-lite",
+  "version": "0.1.0",
+  "description": "Hyper-modular Vue 3 components for Bootstrap 5.3",
+  "keywords": [
+    "bootstrap",
+    "bootstrap5",
+    "components",
+    "modular",
+    "vue",
+    "vue3"
+  ],
+  "license": "MIT",
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./core": {
+      "types": "./dist/core/index.d.ts",
+      "import": "./dist/core/index.js"
+    },
+    "./collapse": {
+      "types": "./dist/collapse/index.d.ts",
+      "import": "./dist/collapse/index.js"
+    },
+    "./modal": {
+      "types": "./dist/modal/index.d.ts",
+      "import": "./dist/modal/index.js"
+    },
+    "./dropdown": {
+      "types": "./dist/dropdown/index.d.ts",
+      "import": "./dist/dropdown/index.js"
+    },
+    "./toast": {
+      "types": "./dist/toast/index.d.ts",
+      "import": "./dist/toast/index.js"
+    }
+  },
+  "scripts": {
+    "build": "node -e \"fs.rmSync('dist',{recursive:true,force:true})\" && vite build && vue-tsc -p tsconfig.build.json",
+    "dev": "vite",
+    "lint": "oxlint . && vue-tsc --noEmit && oxfmt --check",
+    "format": "oxfmt .",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@types/bootstrap": "^5.2.10",
+    "@types/node": "^25.6.0",
+    "@vitejs/plugin-vue": "^6.0.6",
+    "bootstrap": "^5.3.8",
+    "oxfmt": "^0.45.0",
+    "oxlint": "^1.60.0",
+    "typescript": "^6.0.3",
+    "vite": "^8.0.8",
+    "vue": "^3.5.32",
+    "vue-tsc": "^3.2.6"
+  },
+  "peerDependencies": {
+    "bootstrap": "^5.3.0",
+    "vue": "^3.5.0"
+  }
+}
