@@ -1,6 +1,6 @@
 {
   "name": "bootstrap-vue-lite",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Hyper-modular Vue 3 components for Bootstrap 5.3",
   "keywords": [
     "bootstrap",
@@ -10,11 +10,21 @@
     "vue",
     "vue3"
   ],
+  "homepage": "https://github.com/a-kriya/bootstrap-vue-lite#readme",
+  "bugs": {
+    "url": "https://github.com/a-kriya/bootstrap-vue-lite/issues"
+  },
   "license": "MIT",
+  "author": "a-kriya",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/a-kriya/bootstrap-vue-lite.git"
+  },
   "files": [
     "dist"
   ],
   "type": "module",
+  "sideEffects": false,
   "main": "dist/index.js",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -44,6 +54,9 @@
       "import": "./dist/toast/index.js"
     }
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "node -e \"fs.rmSync('dist',{recursive:true,force:true})\" && vite build && vue-tsc -p tsconfig.build.json",
     "dev": "vite",
@@ -66,5 +79,8 @@
   "peerDependencies": {
     "bootstrap": "^5.3.0",
     "vue": "^3.5.0"
+  },
+  "engines": {
+    "node": ">=22.14.0"
   }
 }

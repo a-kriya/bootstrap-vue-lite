@@ -4,9 +4,16 @@
 
 ## Philosophy
 
-Unlike monolithic Bootstrap+Vue libraries, this framework lets you import
-**only the components you need**. Each component is a standalone module
-with zero global state.
+Unlike monolithic Bootstrap+Vue libraries, this package is built around a
+**simple import → register → use** workflow.
+
+You don’t install a global plugin or pull in the entire framework. Instead,
+you import exactly the Bootstrap JS components you need, register them,
+and start using them.
+
+Each component is a standalone module with zero global state, designed to
+mirror Bootstrap’s JavaScript behavior while fitting naturally into Vue’s
+composition model.
 
 ## Install
 
