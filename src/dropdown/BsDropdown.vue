@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type {Dropdown} from 'bootstrap'
-import {ref, onMounted, onBeforeUnmount} from 'vue'
+import {ref, onMounted, onBeforeUnmount, cloneVNode, h, type ClassValue} from 'vue'
 
 import {useBootstrapInstance} from '../core/useBootstrap'
 
@@ -13,7 +13,7 @@ const props = withDefaults(
     autoClose?: boolean | 'inside' | 'outside'
     dark?: boolean
     menuAlign?: 'start' | 'end'
-    menuClass?: string
+    menuClass?: ClassValue
   }>(),
   {
     text: 'Dropdown',
@@ -23,7 +23,7 @@ const props = withDefaults(
     autoClose: true,
     dark: false,
     menuAlign: 'start',
-    menuClass: '',
+    menuClass: undefined,
   }
 )
 
@@ -34,9 +34,21 @@ const emit = defineEmits<{
   hidden: [event: Event]
 }>()
 
+// The `trigger` slot's first root must be a DOM element (button/a/div) — a
+// component vnode would bind the ref to the component instance, not the DOM
+// node, breaking `new Dropdown(el)`.
+const slots = defineSlots<{
+  trigger?(props: {isOpen: boolean}): any
+  default?(): any
+}>()
+
 const triggerRef = ref<HTMLElement | null>(null)
 const isOpen = ref(false)
 const bsOptions = ref({autoClose: props.autoClose})
+
+function setTriggerRef(el: unknown) {
+  triggerRef.value = el as HTMLElement | null
+}
 
 const {instance} = useBootstrapInstance<Dropdown>(triggerRef, 'Dropdown', bsOptions)
 
@@ -70,29 +82,27 @@ const hide = () => instance.value?.hide()
 const toggle = () => instance.value?.toggle()
 
 defineExpose({show, hide, toggle})
+
+function TriggerSlot() {
+  const provided = slots.trigger?.({isOpen: isOpen.value})
+  const base =
+    provided?.[0] ??
+    h('button', {class: `btn btn-${props.variant} dropdown-toggle`, type: 'button'}, props.text)
+  return cloneVNode(
+    base,
+    {'ref': setTriggerRef, 'data-bs-toggle': 'dropdown', 'aria-expanded': isOpen.value},
+    true
+  )
+}
 </script>
 
 <template>
   <div :class="['dropdown', direction !== 'down' ? 'drop' + direction : '']">
-    <slot name="trigger">
-      <button
-        ref="triggerRef"
-        :class="'btn btn-' + variant + ' dropdown-toggle'"
-        type="button"
-        data-bs-toggle="dropdown"
-        :aria-expanded="isOpen"
-      >
-        {{ text }}
-      </button>
-    </slot>
+    <TriggerSlot />
 
     <ul
-      :class="[
-        'dropdown-menu',
-        dark && 'dropdown-menu-dark',
-        'dropdown-menu-' + menuAlign,
-        menuClass,
-      ]"
+      :class="['dropdown-menu', 'dropdown-menu-' + menuAlign, menuClass]"
+      :data-bs-theme="dark ? 'dark' : null"
     >
       <slot />
     </ul>
