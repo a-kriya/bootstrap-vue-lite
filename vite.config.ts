@@ -3,7 +3,25 @@ import {resolve} from 'path'
 import vue from '@vitejs/plugin-vue'
 import {defineConfig} from 'vite'
 
-export default defineConfig(({command}) => {
+export default defineConfig(({command, mode}) => {
+  // Build the playground as a static site (for GitHub Pages)
+  if (mode === 'playground') {
+    return {
+      root: 'playground',
+      base: './',
+      plugins: [vue()],
+      resolve: {
+        alias: {
+          'bootstrap-vue-lite': resolve(__dirname, 'src'),
+        },
+      },
+      build: {
+        outDir: resolve(__dirname, 'dist-playground'),
+        emptyOutDir: true,
+      },
+    }
+  }
+
   // Dev server: serve the playground app
   if (command === 'serve') {
     return {

@@ -59,10 +59,12 @@
   },
   "scripts": {
     "build": "node -e \"fs.rmSync('dist',{recursive:true,force:true})\" && vite build && vue-tsc -p tsconfig.build.json",
+    "build:playground": "vite build --mode playground",
     "dev": "vite",
     "lint": "oxlint . && vue-tsc --noEmit && oxfmt --check",
     "format": "oxfmt .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "preview:playground": "vite preview --mode playground"
   },
   "devDependencies": {
     "@types/bootstrap": "^5.2.10",

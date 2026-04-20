@@ -2,6 +2,10 @@
 
 > Bootstrap 5.3 JS components implemented in Vue.
 
+## Demo
+
+Live playground: **https://a-kriya.github.io/bootstrap-vue-lite/**
+
 ## Philosophy
 
 Unlike monolithic Bootstrap+Vue libraries, this package is built around a
