@@ -64,7 +64,8 @@
     "lint": "oxlint . && vue-tsc --noEmit && oxfmt --check",
     "format": "oxfmt .",
     "preview": "vite preview",
-    "preview:playground": "vite preview --mode playground"
+    "preview:playground": "vite preview --mode playground",
+    "release": "npm version ${npm_config_type:-patch} -m \"chore: release %s\""
   },
   "devDependencies": {
     "@types/bootstrap": "^5.2.10",
