@@ -8,7 +8,6 @@ const props = withDefaults(
     divider?: boolean
   }>(),
   {
-    href: '#',
     active: false,
     disabled: false,
     header: false,
@@ -34,11 +33,21 @@ function handleClick(e: MouseEvent) {
   </h6>
   <li v-else>
     <a
+      v-if="href !== undefined"
       :class="['dropdown-item', active && 'active', disabled && 'disabled']"
       :href="href"
       @click.prevent="handleClick"
     >
       <slot />
     </a>
+    <button
+      v-else
+      type="button"
+      :class="['dropdown-item', active && 'active']"
+      :disabled="disabled"
+      @click="handleClick"
+    >
+      <slot />
+    </button>
   </li>
 </template>
