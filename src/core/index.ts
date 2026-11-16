@@ -1,1 +1,1 @@
-export {useBootstrapInstance, getBootstrapModule} from './useBootstrap'
+export {useBootstrapInstance, type BootstrapModuleName} from './useBootstrap'

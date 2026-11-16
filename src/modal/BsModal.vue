@@ -63,7 +63,7 @@ watch(
   }
 )
 
-// Show modal once the Bootstrap instance is ready (async import resolved)
+// Show modal once the Bootstrap instance exists (after mount)
 watch(isReady, (ready) => {
   if (ready && props.modelValue) {
     ;(instance.value as any)?.show()

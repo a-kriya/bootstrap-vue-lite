@@ -1,13 +1,11 @@
+import * as bootstrap from 'bootstrap'
 import {ref, shallowRef, onMounted, onBeforeUnmount, type Ref} from 'vue'
 
-/**
- * Lazily resolve a Bootstrap JS class by name.
- * Dynamic import ensures tree-shaking works — only the
- * Bootstrap modules you actually use get bundled.
- */
-export async function getBootstrapModule(name: string): Promise<any> {
-  const bs = await import('bootstrap')
-  return (bs as Record<string, any>)[name] ?? (bs as Record<string, any>).default?.[name]
+export type BootstrapModuleName = keyof typeof bootstrap
+
+interface BootstrapComponent {
+  new (el: Element, options?: Record<string, any>): unknown
+  getInstance(el: Element): {dispose(): void} | null
 }
 
 /**
@@ -23,23 +21,22 @@ export async function getBootstrapModule(name: string): Promise<any> {
  */
 export function useBootstrapInstance<T>(
   elRef: Ref<HTMLElement | null>,
-  moduleName: string,
+  moduleName: BootstrapModuleName,
   options: Ref<Record<string, any>> | Record<string, any> = {}
 ) {
   const instance = shallowRef<T | null>(null)
   const isReady = ref(false)
 
-  async function init() {
-    if (!elRef.value) return
-    const Ctor = await getBootstrapModule(moduleName)
-    if (!Ctor || !elRef.value) return
+  function init() {
+    const el = elRef.value
+    if (!el) return
+    const Ctor = bootstrap[moduleName] as unknown as BootstrapComponent
 
     // Dispose any previous instance on the same element
-    const existing = Ctor.getInstance(elRef.value)
-    if (existing) existing.dispose()
+    Ctor.getInstance(el)?.dispose()
 
     const opts = 'value' in options ? (options as Ref).value : options
-    instance.value = new Ctor(elRef.value, opts) as T
+    instance.value = new Ctor(el, opts) as T
     isReady.value = true
   }
 
