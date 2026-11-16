@@ -1,6 +1,6 @@
 # bootstrap-vue-lite
 
-> Bootstrap 5.3 JS components implemented in Vue.
+> Lightweight Vue wrappers for Bootstrap JS components
 
 ## Demo
 
@@ -8,16 +8,12 @@ Live playground: **https://a-kriya.github.io/bootstrap-vue-lite/**
 
 ## Philosophy
 
-Unlike monolithic Bootstrap+Vue libraries, this package is built around a
-**simple import → register → use** workflow.
-
-You don’t install a global plugin or pull in the entire framework. Instead,
-you import exactly the Bootstrap JS components you need, register them,
-and start using them.
+Unlike monolithic Bootstrap + Vue libraries, this package is built around a
+**simple import → use** workflow.
 
 Each component is a standalone module with zero global state, designed to
 mirror Bootstrap’s JavaScript behavior while fitting naturally into Vue’s
-composition model.
+composition or options APIs.
 
 ## Install
 
@@ -33,7 +29,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 
 ## Usage
 
-### Option 1: Direct Import (recommended)
+### Option 1: Direct Import (local usage)
 
 ```vue
 <script setup lang="ts">
